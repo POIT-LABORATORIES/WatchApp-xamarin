@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using WatchApp.Services;
+using Xamarin.Forms;
 
 namespace WatchApp.Models
 {
@@ -11,7 +13,7 @@ namespace WatchApp.Models
         public string CaseColor { get; set; }
         public string CaseMaterial { get; set; }
         public string AvatarUrl { get; set; }
-        public string Text { get; set; }
+        public StreamImageSource ImageStreamSource { get; set; }
         public string Description { get; set; }
         public Double Latitude { get; set; }
         public Double Longitude { get; set; }

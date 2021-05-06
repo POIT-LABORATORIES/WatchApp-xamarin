@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows.Input;
 using WatchApp.Models;
@@ -16,6 +18,7 @@ namespace WatchApp.ViewModels
         private double latitude;
         private double longitude;
         private string description;
+        private ImageSource imageStreamSource;
 
         public NewItemViewModel()
         {
@@ -31,7 +34,8 @@ namespace WatchApp.ViewModels
                 && !String.IsNullOrWhiteSpace(style)
                 && !String.IsNullOrWhiteSpace(caseColor)
                 && !String.IsNullOrWhiteSpace(caseMaterial)
-                && !String.IsNullOrWhiteSpace(description);
+                && !String.IsNullOrWhiteSpace(description)
+                && (imageStreamSource != null);
         }
 
         public string Name
@@ -79,6 +83,12 @@ namespace WatchApp.ViewModels
             set => SetProperty(ref description, value);
         }
 
+        public ImageSource ImageStreamSource
+        {
+            get => imageStreamSource;
+            set => SetProperty(ref imageStreamSource, value);
+        }
+
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
 
@@ -88,7 +98,7 @@ namespace WatchApp.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-        private async void OnSave()
+        private void OnSave()
         {
             Item newItem = new Item()
             {
@@ -99,13 +109,17 @@ namespace WatchApp.ViewModels
                 CaseMaterial = CaseMaterial,
                 Latitude = Latitude,
                 Longitude = Longitude,
-                Description = Description
+                Description = Description,
+                ImageStreamSource = (StreamImageSource)ImageStreamSource
             };
 
-            await DataStore.AddItemAsync(newItem);
+            if (newItem.ImageStreamSource != null)
+                Debug.WriteLine("Image Stream is not null");
+
+            //await DataStore.AddItemAsync(newItem);
 
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
+            //await Shell.Current.GoToAsync("..");
         }
     }
 }

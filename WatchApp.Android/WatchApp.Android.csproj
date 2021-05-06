@@ -88,6 +88,7 @@
     <Compile Include="ServiceListeners\OnCompleteListener.cs" />
     <Compile Include="Services\DataStore.cs" />
     <Compile Include="Services\Firestore.cs" />
+    <Compile Include="Services\PhotoPickerService .cs" />
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
