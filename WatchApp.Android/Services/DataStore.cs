@@ -4,7 +4,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Firebase;
 using Firebase.Firestore;
+using Firebase.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,17 @@ namespace WatchApp.Droid.Services
     {
         public Task<bool> AddItemAsync(Item item)
         {
+            // Закачать картинку, ожидать загрузки с пом. await. Проверить результат.
+            // В качестве пути загрузки: (@"images/${item.Name}-avatar")
+            //StorageReference imageRef = FirebaseStorage.Instance.GetReference("").Child($"images/{item.Name}-avatar");
+            //var uploadTask = imageRef.PutStream(item.ImageStream);
+
+            var uploadTask = FirebaseStorage.Instance.GetReference($"images/{item.Name}-avatar").PutStream(item.ImageStream);
+
+            //Task<Uri> urlTask = uploadTask.ContinueWithTask().AddOnCompleteListener();
+
+
+            // Сохранить полученный URI в AvatarUrl, залить в Firestore.
             throw new NotImplementedException();
         }
 
@@ -30,7 +43,7 @@ namespace WatchApp.Droid.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Item> GetItemAsync(string id)
+        public Task<Item> GetItemAsync(string id)
         {
             var tcs = new TaskCompletionSource<Item>();
 
@@ -40,7 +53,7 @@ namespace WatchApp.Droid.Services
                 .Get()
                 .AddOnCompleteListener(new OnCompleteListener<Item>(tcs));
 
-            return await tcs.Task;
+            return tcs.Task;
         }
 
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)

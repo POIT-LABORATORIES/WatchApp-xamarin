@@ -13,7 +13,8 @@ namespace WatchApp.Models
         public string CaseColor { get; set; }
         public string CaseMaterial { get; set; }
         public string AvatarUrl { get; set; }
-        public StreamImageSource ImageStreamSource { get; set; }
+        //public StreamImageSource ImageStreamSource { get; set; }
+        public Stream ImageStream { get; set; }
         public string Description { get; set; }
         public Double Latitude { get; set; }
         public Double Longitude { get; set; }

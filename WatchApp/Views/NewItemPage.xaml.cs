@@ -56,7 +56,7 @@ namespace WatchApp.Views
                 Debug.WriteLine("NewItemPage: Stream is " + stream);
                 var image = new Image();
                 image.Source = ImageSource.FromStream(() => stream);
-                //_viewModel.ImageStreamSource
+                _viewModel.ImageStream = stream;
                 //Item.ImageStream = stream;
                 //Item.ImageStreamSource = ImageSource.FromStream(() => stream);
             } 

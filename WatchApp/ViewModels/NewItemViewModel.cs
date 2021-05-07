@@ -18,7 +18,8 @@ namespace WatchApp.ViewModels
         private double latitude;
         private double longitude;
         private string description;
-        private ImageSource imageStreamSource;
+        //private ImageSource imageStreamSource;
+        private Stream imageStream;
 
         public NewItemViewModel()
         {
@@ -35,7 +36,7 @@ namespace WatchApp.ViewModels
                 && !String.IsNullOrWhiteSpace(caseColor)
                 && !String.IsNullOrWhiteSpace(caseMaterial)
                 && !String.IsNullOrWhiteSpace(description)
-                && (imageStreamSource != null);
+                && (imageStream != null);
         }
 
         public string Name
@@ -83,11 +84,19 @@ namespace WatchApp.ViewModels
             set => SetProperty(ref description, value);
         }
 
+        public Stream ImageStream
+        {
+            get => imageStream;
+            set => SetProperty(ref imageStream, value);
+        }
+
+        /*
         public ImageSource ImageStreamSource
         {
             get => imageStreamSource;
             set => SetProperty(ref imageStreamSource, value);
         }
+        */
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
@@ -110,10 +119,10 @@ namespace WatchApp.ViewModels
                 Latitude = Latitude,
                 Longitude = Longitude,
                 Description = Description,
-                ImageStreamSource = (StreamImageSource)ImageStreamSource
+                ImageStream = ImageStream
             };
 
-            if (newItem.ImageStreamSource != null)
+            if (newItem.ImageStream != null)
                 Debug.WriteLine("Image Stream is not null");
 
             //await DataStore.AddItemAsync(newItem);
