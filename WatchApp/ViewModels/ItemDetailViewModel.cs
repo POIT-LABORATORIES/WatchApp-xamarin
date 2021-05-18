@@ -10,21 +10,14 @@ namespace WatchApp.ViewModels
     public class ItemDetailViewModel : BaseViewModel
     {
         private string itemId;
-        //private string text;
         private string name;
         private string style;
         private string caseColor;
         private string caseMaterial;
+        private string avatarUrl;
         private string description;
-        public string Id { get; set; }
 
-        /*
-        public string Text
-        {
-            get => text;
-            set => SetProperty(ref text, value);
-        }
-        */
+        public string Id { get; set; }
 
         public string Name
         {
@@ -48,6 +41,12 @@ namespace WatchApp.ViewModels
         {
             get => caseMaterial;
             set => SetProperty(ref caseMaterial, value);
+        }
+
+        public string AvatarUrl
+        {
+            get => avatarUrl;
+            set => SetProperty(ref avatarUrl, value);
         }
 
         public string Description
@@ -79,6 +78,7 @@ namespace WatchApp.ViewModels
                 Style = item.Style;
                 CaseColor = item.CaseColor;
                 CaseMaterial = item.CaseMaterial;
+                AvatarUrl = item.AvatarUrl;
                 Description = item.Description;
             }
             catch (Exception)

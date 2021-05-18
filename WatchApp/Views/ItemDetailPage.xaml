@@ -5,11 +5,19 @@
              Title="{Binding Title}">
 
     <StackLayout Spacing="20" Padding="15">
+        <Image Source="{Binding AvatarUrl}" HeightRequest="200"/>
+        
         <Label Text="Name:" FontSize="Medium" />
         <Label Text="{Binding Name}" FontSize="Small"/>
 
         <Label Text="Style:" FontSize="Medium" />
         <Label Text="{Binding Style}" FontSize="Small"/>
+
+        <Label Text="Case color:" FontSize="Medium" />
+        <Label Text="{Binding CaseColor}" FontSize="Small"/>
+
+        <Label Text="Case material:" FontSize="Medium" />
+        <Label Text="{Binding CaseMaterial}" FontSize="Small"/>
 
         <Label Text="Description:" FontSize="Medium" />
         <Label Text="{Binding Description}" FontSize="Small"/>

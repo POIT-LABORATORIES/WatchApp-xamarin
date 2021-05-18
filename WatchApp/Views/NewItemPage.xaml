@@ -21,10 +21,10 @@
             <Entry Text="{Binding CaseMaterial, Mode=TwoWay}" FontSize="Medium" />
 
             <Label Text="Latitude" FontSize="Medium" />
-            <Entry Text="{Binding Latitude, Mode=TwoWay}" FontSize="Medium" Completed="Entry_Completed" IsTextPredictionEnabled="False" />
+            <Entry Text="{Binding Latitude, Mode=TwoWay}" FontSize="Medium" IsTextPredictionEnabled="False" />
 
             <Label Text="Longitude" FontSize="Medium" />
-            <Entry Text="{Binding Longitude, Mode=TwoWay}" FontSize="Medium" Completed="Entry_Completed" IsTextPredictionEnabled="False" />
+            <Entry Text="{Binding Longitude, Mode=TwoWay}" FontSize="Medium" IsTextPredictionEnabled="False" />
 
             <Label Text="Description" FontSize="Medium" />
             <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />

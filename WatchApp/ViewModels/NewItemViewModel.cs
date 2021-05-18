@@ -107,7 +107,7 @@ namespace WatchApp.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-        private void OnSave()
+        private async void OnSave()
         {
             Item newItem = new Item()
             {
@@ -116,8 +116,8 @@ namespace WatchApp.ViewModels
                 Style = Style,
                 CaseColor = CaseColor,
                 CaseMaterial = CaseMaterial,
-                Latitude = Latitude,
-                Longitude = Longitude,
+                Latitude = Latitude + 0.000,
+                Longitude = Longitude + 0.000,
                 Description = Description,
                 ImageStream = ImageStream
             };
@@ -125,10 +125,12 @@ namespace WatchApp.ViewModels
             if (newItem.ImageStream != null)
                 Debug.WriteLine("Image Stream is not null");
 
-            //await DataStore.AddItemAsync(newItem);
-
-            // This will pop the current page off the navigation stack
-            //await Shell.Current.GoToAsync("..");
+            bool isSuccess = await DataStore.AddItemAsync(newItem);
+            if (isSuccess)
+            {
+                // This will pop the current page off the navigation stack
+                await Shell.Current.GoToAsync("..");
+            }
         }
     }
 }

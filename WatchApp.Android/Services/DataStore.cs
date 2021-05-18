@@ -7,8 +7,10 @@ using Android.Widget;
 using Firebase;
 using Firebase.Firestore;
 using Firebase.Storage;
+using Java.Util;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,20 +24,37 @@ namespace WatchApp.Droid.Services
 {
     class DataStore : IDataStore<Item>
     {
-        public Task<bool> AddItemAsync(Item item)
+        public async Task<bool> AddItemAsync(Item item)
         {
-            // Закачать картинку, ожидать загрузки с пом. await. Проверить результат.
-            // В качестве пути загрузки: (@"images/${item.Name}-avatar")
-            //StorageReference imageRef = FirebaseStorage.Instance.GetReference("").Child($"images/{item.Name}-avatar");
-            //var uploadTask = imageRef.PutStream(item.ImageStream);
+            item.AvatarUrl = await FirebaseCloudStorage.UploadImage(item.ImageStream, $"images/{item.Name}-avatar");
 
-            var uploadTask = FirebaseStorage.Instance.GetReference($"images/{item.Name}-avatar").PutStream(item.ImageStream);
+            System.Diagnostics.Debug.WriteLine("\n\nDataStore.AddItemAsync: image URL is " + item.AvatarUrl + "\n\n");
 
-            //Task<Uri> urlTask = uploadTask.ContinueWithTask().AddOnCompleteListener();
+            /*
+            Item newItem = new Item()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Style = item.Style,
+                CaseColor = item.CaseColor,
+                CaseMaterial = item.CaseMaterial,
+                Latitude = item.Latitude,
+                Longitude = item.Longitude,
+                AvatarUrl = item.AvatarUrl,
+                Description = item.Description
+            };
+            */
 
+            item.ImageStream = null;
 
-            // Сохранить полученный URI в AvatarUrl, залить в Firestore.
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<bool>();
+
+            FirebaseFirestore.Instance
+                .Collection(DatabaseKey.FirebaseFirestore.Collection.Watches)
+                .Add(item.Convert())
+                .AddOnCompleteListener(new OnCreateCompleteListener(tcs));
+
+             return await tcs.Task;
         }
 
         public Task<bool> DeleteItemAsync(string id)
